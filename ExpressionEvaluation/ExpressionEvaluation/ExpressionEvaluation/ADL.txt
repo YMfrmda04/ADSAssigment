@@ -1,0 +1,322 @@
+﻿
+ADL
+declare Component CommandLine, ExpressionParser, InfixToPostfixConverter, MANAGER, PostfixEvaluator, Token, TokenType, VariableManager, Input
+
+declare DataStructure Sequence, Collection, KeyValueStore
+
+DataStructure Sequence
+  Description:
+    - Represents an ordered collection of elements, where each element is accessible by its position or index.
+    - Maintains the order of elements as they are added.
+    - Common implementations in various programming languages include arrays, lists, or vectors.
+
+DataStructure Collection
+  Description:
+    - A general term for any grouping of elements, without necessarily maintaining the order of elements.
+    - Can include various forms like sets, lists, queues, or stacks, depending on the specific requirements of the system.
+    - Used for storing and manipulating a group of items, where the main requirement is the inclusion of elements, possibly with specific constraints on access or modification.
+
+DataStructure KeyValueStore
+  Description:
+    - A data structure that stores elements as key-value pairs, where each key is unique and maps to exactly one value.
+    - Enables fast retrieval of data based on the key.
+    - Commonly implemented as dictionaries, maps, or associative arrays in many programming languages.
+    - Ideal for scenarios where quick access to elements is needed based on a unique identifier.
+
+
+
+Component TokenType
+    declare Constant Operand
+    declare Constant Operator
+    declare Constant Parenthesis
+    declare Constant Boolean
+    declare Constant Comparison
+
+
+Component Token
+    declare Type
+    declare Value
+    declare IsVariable
+
+    procedure(type, value, isVariable)
+        Type ← type
+        Value ← value
+        IsVariable ← isVariable
+
+    function GetType()
+        return Type
+
+    function GetValue()
+        return Value
+
+    function IsVariableToken()
+        return IsVariable
+
+
+
+
+ADL
+Component CommandLine
+  procedure Start()
+    declare data ← CALL Input.ReadInput()
+    CALL manager.ProcessInput(data)
+
+
+Component CommandLine
+    declare input ← Input
+    declare manager ← MANAGER
+
+    procedure Start()
+        Print("Please enter your expressions: ")
+        declare userExpressions ← CALL input.ReadInput()
+        CALL manager.ProcessInput(userExpressions)
+
+
+ADL
+Component Input
+  function ReadInput
+    return data
+
+Component Input
+    function ReadInput()
+        declare userInput ← receive input from user
+        return userInput
+
+    function InputType(expectedType)
+        repeat
+            declare input ← CALL ReadInput()
+            if (input is of type expectedType) then
+                return input
+            else
+                Print("Invalid input type. Please enter a " + expectedType + ":")
+            endif
+        UNTIL (input is of type expectedType)
+
+
+
+
+ADL
+Component MANAGER
+    declare variables ← KeyValueStore
+
+    procedure ProcessInput(data)
+        declare infixExpression ← CALL ExpressionParser.ParseExpression(data)
+        CALL GiveValue(infixExpression, variables)
+        declare postfixExpression ← CALL InfixToPostfixConverter.InfixToPostfix(infixExpression)
+        declare result ← CALL PostfixEvaluator.EvaluatePostfix(postfixExpression)
+        Print(result)
+
+    procedure GiveValue(infixExpression, variables)
+        for index ← 0 to length of infixExpression by 1
+            if (infixExpression[index].Type == TokenType.Boolean) then
+                if (infixExpression[index].Value == "true") then
+                    CALL variables.SetVariable(infixExpression[index].Value, 1)
+                else if (infixExpression[index].Value == "false") then
+                    CALL variables.SetVariable(infixExpression[index].Value, 0)
+                endif
+            else if (infixExpression[index].Type == TokenType.Operand && infixExpression[index].IsVariable) then
+                print("Please enter a value for " + infixExpression[index].Value + ": ")
+                CALL variables.SetVariable(infixExpression[index].Value, CALL Input.ReadInput())
+            endif
+        end for
+
+
+
+Component ExpressionParser
+    declare tokens ← Sequence
+
+    function ParseExpression(data)
+        clear tokens
+        for index ← 0 to length of data by 1
+            declare character ← data[index]
+            CALL UpdateTokenTypes(character, index, data)
+            CALL HandleCurrentToken(character)
+        end for
+        CALL AddRemainingTokens()
+        return tokens
+
+    procedure UpdateTokenTypes(character, index, data)
+        if (IsNumber(character)) then
+            append character to currentDigit
+        else if (IsLetter(character)) then
+            append character to currentBool
+        else
+            CALL UpdateNonLetterTokenTypes(character, index, data)
+        endif
+
+    procedure UpdateNonLetterTokenTypes(character, index, data)
+        if (IsOperator(character)) then
+            CALL AddRemainingTokens()
+            append new Token(TokenType.Operator, character) to tokens
+        else if (IsParenthesis(character)) then
+            CALL AddRemainingTokens()
+            append new Token(TokenType.Parenthesis, character) to tokens
+        else if (IsComparisonOperator(character, index, data)) then
+            append character to currentComparison
+        endif
+
+    procedure HandleCurrentToken(character)
+        if (NotLetterOrDigit(character)) then
+            CALL AddRemainingTokens()
+        endif
+
+    procedure AddRemainingTokens()
+        if (currentDigit not empty) then
+            append new Token(TokenType.Operand, currentDigit) to tokens
+            clear currentDigit
+        endif
+        if (currentBool not empty) then
+            if (IsBoolean(currentBool)) then
+                append new Token(TokenType.Boolean, currentBool) to tokens
+            else
+                append new Token(TokenType.Operand, currentBool, true) to tokens
+            endif
+            clear currentBool
+        endif
+        if (currentComparison is not empty) then
+            append new Token(TokenType.Comparison, currentComparison) to tokens
+            clear currentComparison
+        endif
+
+    function IsNumber(character)
+        if (character is number) then
+		return true
+	return false
+
+    function IsLetter(character)
+        if (character is IsLetter) then
+		return true
+	return false
+
+    function IsOperator(character)
+        if (character is IsOperator) then
+		return true
+	return false
+
+    function IsParenthesis(character)
+        if (character == “(” || character == “)”) then
+		return true
+	return false
+
+    function IsComparisonOperator(character, index, data)
+        // Define criteria for characters to form a comparison operator
+
+
+
+
+ADL
+Component InfixToPostfixConverter
+    declare operators ← Collection
+    declare postfix ← Sequence
+
+    function InfixToPostfix(infixExpression)
+        clear postfix
+        clear operators
+        for index ← 0 to length of infixExpression by 1
+            declare token ← infixExpression[index]
+
+            if (token.Type == TokenType.Operand) then
+                CALL ProcessOperand(infixExpression, index)
+            else if (token.Value == "(") then
+                CALL ProcessOpeningParenthesis(token)
+            else if (token.Value == ")") then
+                CALL ProcessClosingParenthesis()
+            else if (token.Type == TokenType.Operator) then
+                CALL ProcessOperator(token)
+            endif
+        end for
+
+        while (operators not empty)
+            append operators.Pop() to postfix
+        end while
+
+        return postfix
+
+    procedure ProcessOperand(infixExpression, index)
+        while (index < length of infixExpression && infixExpression[index].Type == TokenType.Operand)
+            append infixExpression[index] to postfix
+            increment index
+        end while
+        decrement index
+
+    procedure ProcessOpeningParenthesis(token)
+        operators.Push(token)
+
+    procedure ProcessClosingParenthesis()
+        while (operators not empty && operators.Peek().Value != "(")
+            append operators.Pop() to postfix
+        end while
+        operators.Pop() // Pop the "("
+
+    procedure ProcessOperator(token)
+        while (operators not empty && GetPrecedence(operators.Peek()) >= GetPrecedence(token))
+            append operators.Pop() to postfix
+        end while
+        operators.Push(token)
+
+    function GetPrecedence(token)
+        // Define precedence of operators
+
+
+
+Component PostfixEvaluator
+    declare variables ← KeyValueStore
+    declare operations ← KeyValueStore
+    declare operandStack ← Collection
+
+    procedure EvaluatePostfix(postfixExpression)
+        clear operandStack
+        for each token in postfixExpression
+            if (token.Type == TokenType.Operand || token.IsVariable) then
+                CALL ProcessOperand(token)
+            else if (token.Type == TokenType.Operator || token.Type == TokenType.Boolean || token.Type == TokenType.Comparison) then
+                CALL ProcessOperator(token)
+            endif
+        end for
+        return operandStack.Pop()
+
+    procedure ProcessOperand(token)
+        if (token.IsVariable) then
+            declare variableValue ← CALL variables.GetVariableValue(token.Value)
+            operandStack.Push(variableValue)
+        else
+            operandStack.Push(token.Value)
+        endif
+
+    procedure ProcessOperator(token)
+        if (operandStack.Count < 2) then
+            throw Error("Insufficient operands")
+        endif
+        declare operand2 ← operandStack.Pop()
+        declare operand1 ← operandStack.Pop()
+        declare result ← CALL EvaluateOperation(operand1, operand2, token.Value)
+        operandStack.Push(result)
+
+    function EvaluateOperation(operand1, operand2, operation)
+        switch (operation)
+            case "+" : return operand1 + operand2
+            case "-" : return operand1 - operand2
+            case "*" : return operand1 * operand2
+            case "/" : return operand1 / operand2
+            case "^" : return Power(operand1, operand2)
+            // Add cases for Boolean and comparison operators
+            default : throw Error("Unknown operation")
+        end switch
+
+
+Component VariableManager
+    declare variables ← stores KeyValueStore for variables
+
+    procedure SetVariable(key, value)
+        if (key exists in variables) then
+            Update value for key in variables
+        else
+            Add key-value pair to variables
+        endif
+
+    function GetVariableValue(key)
+        if (key exists in variables) then
+            return value for key from variables
+        else
+            throw Error("Variable not found")
+        endif

@@ -1,0 +1,15 @@
+/Users/amallll/Documents/ADS-Assigment/CriticalPathAnalysis/CriticalPathAnalysis/bin/Debug/net7.0/CriticalPathAnalysis
+/Users/amallll/Documents/ADS-Assigment/CriticalPathAnalysis/CriticalPathAnalysis/bin/Debug/net7.0/CriticalPathAnalysis.deps.json
+/Users/amallll/Documents/ADS-Assigment/CriticalPathAnalysis/CriticalPathAnalysis/bin/Debug/net7.0/CriticalPathAnalysis.runtimeconfig.json
+/Users/amallll/Documents/ADS-Assigment/CriticalPathAnalysis/CriticalPathAnalysis/bin/Debug/net7.0/CriticalPathAnalysis.dll
+/Users/amallll/Documents/ADS-Assigment/CriticalPathAnalysis/CriticalPathAnalysis/bin/Debug/net7.0/CriticalPathAnalysis.pdb
+/Users/amallll/Documents/ADS-Assigment/CriticalPathAnalysis/CriticalPathAnalysis/obj/Debug/net7.0/CriticalPathAnalysis.csproj.AssemblyReference.cache
+/Users/amallll/Documents/ADS-Assigment/CriticalPathAnalysis/CriticalPathAnalysis/obj/Debug/net7.0/CriticalPathAnalysis.GeneratedMSBuildEditorConfig.editorconfig
+/Users/amallll/Documents/ADS-Assigment/CriticalPathAnalysis/CriticalPathAnalysis/obj/Debug/net7.0/CriticalPathAnalysis.AssemblyInfoInputs.cache
+/Users/amallll/Documents/ADS-Assigment/CriticalPathAnalysis/CriticalPathAnalysis/obj/Debug/net7.0/CriticalPathAnalysis.AssemblyInfo.cs
+/Users/amallll/Documents/ADS-Assigment/CriticalPathAnalysis/CriticalPathAnalysis/obj/Debug/net7.0/CriticalPathAnalysis.csproj.CoreCompileInputs.cache
+/Users/amallll/Documents/ADS-Assigment/CriticalPathAnalysis/CriticalPathAnalysis/obj/Debug/net7.0/CriticalPathAnalysis.dll
+/Users/amallll/Documents/ADS-Assigment/CriticalPathAnalysis/CriticalPathAnalysis/obj/Debug/net7.0/refint/CriticalPathAnalysis.dll
+/Users/amallll/Documents/ADS-Assigment/CriticalPathAnalysis/CriticalPathAnalysis/obj/Debug/net7.0/CriticalPathAnalysis.pdb
+/Users/amallll/Documents/ADS-Assigment/CriticalPathAnalysis/CriticalPathAnalysis/obj/Debug/net7.0/CriticalPathAnalysis.genruntimeconfig.cache
+/Users/amallll/Documents/ADS-Assigment/CriticalPathAnalysis/CriticalPathAnalysis/obj/Debug/net7.0/ref/CriticalPathAnalysis.dll

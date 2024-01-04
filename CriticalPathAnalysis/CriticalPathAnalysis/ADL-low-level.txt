@@ -1,0 +1,326 @@
+﻿declare Component Commands, ProjectManager, PathFinder, Scheduler, DirectedGraph, Node, Edge
+declare DataStructure List, Dictionary, Set
+
+
+
+Component Commands
+    procedure printCommands()
+        repeat
+            Call printMenuOptions()
+            Call inputCommands()
+        UNTIL (userInput == 9)
+
+    procedure inputCommands()
+        declare userInput ← CALL Input.ReadInput()
+        declare project ← ProjectManager
+        CALL project.populateGraph()
+
+        switch (userInput)
+            case 1: CALL project.printProjectDuration()
+            case 2: CALL project.printCriticalPaths()
+            case 3: CALL project.printActivityData()
+            case 9: return
+            default: Print("Invalid option.")
+        end switch
+
+
+
+
+
+Component ProjectManager
+    declare graph ← DirectedGraph
+    declare projectStartDate ← Integer
+
+    constructor(ProjectStartDate)
+        projectStartDate ← ProjectStartDate
+        graph ← CALL DirectedGraph.Constructor()
+
+    procedure populateGraph()
+        CALL graph.AddNode("StartNode")
+	…
+        CALL graph.AddNode("EndNode")
+
+        CALL graph.AddEdge("StartNode", “SecondNode”, “Start”Edge, duration)
+        ... 
+        CALL graph.AddEdge(“SecondEndNode”, "EndNode”, “EndEdge", duration)
+
+
+    procedure printActivityData()
+        declare scheduler ← Scheduler(projectStartDate)
+        declare earliestStartTimes ← CALL scheduler.CalculateEarliestStartTimes(graph.GetNodes())
+        declare latestStartTimes ← CALL scheduler.CalculateLateStartTimes(graph.GetNodes())
+        declare slackTimes ← CALL scheduler.CalculateSlack(graph.GetNodes())
+	
+	declare index ← 0
+	while (index < count of earliestStartTimes 
+			&& count of earliestStartTimes == count of latestStartTimes
+			&& count of earliestStartTimes == count of slackTimes) 
+			
+		Print(earliestStartTimes)
+		Print(latestStartTimes)
+		Print(slackTimes)
+
+		index ← index + 1
+	end
+
+
+    procedure printCriticalPaths()
+        declare pathFinder ← PathFinder(projectStartDate)
+        declare startNode ← graph.GetNodes().First() 
+        declare endNode ← graph.GetNodes().Last()
+        declare criticalPaths ← CALL pathFinder.FindCriticalPaths(startNode, endNode, graph.GetNodes())
+
+	for  index ← 0 to count of criticalPaths by 1
+		Print(criticalPaths[index])
+       
+    procedure printProjectDuration()
+        declare scheduler ← Scheduler(projectStartDate)
+        declare projectDuration ← CALL scheduler.CalculateProjectDuration(graph.GetNodes())
+	Print(”Total Project Duration: “)
+	Print(projectDuration)
+        Print(“ units of time")
+
+
+
+
+Component PathFinder
+    declare start ← Integer
+
+    constructor(Start)
+        start ← Start
+
+    function FindCriticalPaths(startNode, endNode, nodes)
+        declare allPaths ← Collection of Collection of Edge
+        declare currentPath ← Collection of Edge
+        CALL ExplorePaths(startNode, endNode, currentPath, allPaths)
+        declare criticalPaths ← Collection of Collection of Edge
+        for each path in allPaths
+            if CALL IsCriticalPath(path, nodes) then
+                criticalPaths.Add(path)
+            endif
+        end for
+        return criticalPaths
+
+    procedure ExplorePaths(currentNode, endNode, currentPath, allPaths)
+        if (currentNode equals endNode) then
+            allPaths.Add(Copy(currentPath))
+            return
+        endif
+        for each outgoingEdge in currentNode.OutgoingEdges
+            Add(outgoingEdge, currentPath)
+            CALL ExplorePaths(outgoingEdge.Successor, endNode, currentPath, allPaths)
+            RemoveLast(currentPath)
+        end for
+
+    function TopologicalSort(nodes)
+        declare sortedNodes ← Collection of Node
+        declare visited ← Set of Node
+        for each node in nodes
+            CALL TopologicalSortUtil(node, visited, sortedNodes)
+        end for
+        return sortedNodes
+
+    private procedure TopologicalSortUtil(node, visited, sortedNodes)
+        if (not visited.Contains(node)) then
+            Add(node, visited)
+            for each edge in node.OutgoingEdges
+                CALL TopologicalSortUtil(edge.Successor, visited, sortedNodes)
+            end for
+            InsertAtStart(node, sortedNodes)
+        endif
+
+    function CalculateCriticalPath(nodes)
+        declare scheduler ← Scheduler(start)
+        declare slackTimes ← CALL scheduler.CalculateSlack(nodes)
+        declare criticalPath ← Collection of Edge
+        for each edge in nodes.SelectMany(node => node.OutgoingEdges)
+            if (slackTimes[edge] equals 0) then
+                Add(edge, criticalPath)
+            endif
+        end for
+        return criticalPath
+
+    private function IsCriticalPath(path, nodes)
+        for each edge in path
+            if (not CALL IsCriticalEdge(edge, nodes)) then
+                return false
+            endif
+        end for
+        return true
+
+    private function IsCriticalEdge(edge, nodes)
+        declare criticalPath ← CALL CalculateCriticalPath(nodes)
+        return Contains(edge, criticalPath)
+
+
+
+
+Component Scheduler
+    declare projectStart ← Integer
+
+    constructor(Start)
+        projectStart ← Start
+
+    function CalculateEarliestStartTimes(nodes)
+        declare earliestStartTimes ← KeyValueStore
+        declare sortedNodes ← CALL PathFinder.TopologicalSort(nodes)
+        for each node in sortedNodes
+            for each edge in node.OutgoingEdges
+                declare edgeStartTime ← projectStart + CALL CalculateTotalDuration(FirstNode, edge.Predecessor)
+                earliestStartTimes.AddOrUpdate(edge, edgeStartTime)
+            end for
+        end for
+        return earliestStartTimes
+
+    function CalculateLateStartTimes(nodes)
+        declare latestStartTimes ← KeyValueStore
+        declare sortedNodes ← CALL PathFinder.TopologicalSort(nodes)
+        declare projectDuration ← CALL CalculateProjectDuration(nodes) + 1 // Including end node offset
+        for each node in sortedNodes
+            for each edge in node.OutgoingEdges
+                declare edgeEndTime ← projectDuration - CALL CalculateTotalDuration(edge.Successor, LastNode) - edge.Duration
+                latestStartTimes.AddOrUpdate(edge, edgeEndTime)
+            end for
+        end for
+        return latestStartTimes
+
+    function CalculateSlack(nodes)
+        declare slackTimes ← KeyValueStore
+        declare earliestStartTimes ← CALL CalculateEarliestStartTimes(nodes)
+        declare latestStartTimes ← CALL CalculateLateStartTimes(nodes)
+        for each edge in nodes.SelectMany(node => node.OutgoingEdges)
+            declare edgeSlack ← latestStartTimes[edge] - earliestStartTimes[edge]
+            slackTimes.AddOrUpdate(edge, edgeSlack)
+        end for
+        return slackTimes
+
+    function CalculateProjectDuration(nodes)
+        declare earliestStartTimes ← CALL CalculateEarliestStartTimes(nodes)
+        declare totalDuration ← MaxValue(earliestStartTimes) + projectStart
+        return totalDuration
+
+    function CalculateTotalDuration(startNode, endNode)
+        declare pathFinder ← PathFinder(projectStart)
+        declare allPaths ← Collection of Collection of Edge
+        declare currentPath ← Collection of Edge
+        CALL pathFinder.ExplorePaths(startNode, endNode, currentPath, allPaths)
+        declare totalDuration ← Integer Minimum Value
+        for each path in allPaths
+            declare pathDuration ← SumDurations(path)
+            if pathDuration > totalDuration then
+                totalDuration ← pathDuration
+            endif
+        end for
+        return totalDuration
+
+
+
+
+
+
+
+Component DirectedGraph
+    declare nodes ← Collection of Node
+
+    procedure AddNode(nodeName)
+        if (not CALL ContainsNode(nodeName)) then
+            declare newNode ← CALL Node.Constructor(nodeName)
+            Add(newNode, nodes)
+        endif
+
+    procedure AddEdge(sourceNodeName, destinationNodeName, edgeName, duration)
+        declare sourceNode ← CALL FindNode(sourceNodeName)
+        declare destinationNode ← CALL FindNode(destinationNodeName)
+        if (sourceNode is null or destinationNode is null) then
+            throw Error("Node not found")
+        endif
+        declare newEdge ← CALL Edge.Constructor(edgeName, duration, sourceNode, destinationNode)
+        CALL sourceNode.AddOutgoingEdge(newEdge)
+        CALL destinationNode.AddIncomingEdge(newEdge)
+
+    function GetNodes()
+        return nodes
+
+    private function ContainsNode(nodeName)
+        for each node in nodes
+            if (node.Name equals nodeName) then
+                return true
+            endif
+        end for
+        return false
+
+    private function FindNode(nodeName)
+        for each node in nodes
+            if (node.Name equals nodeName) then
+                return node
+            endif
+        end for
+        return null
+
+
+
+
+
+
+
+Component Node
+    declare nodeName ← NodeName
+    declare incomingEdges ← Collection of Edge
+    declare outgoingEdges ← Collection of Edge
+
+    procedure AddIncomingEdge(edge)
+        if (not CALL ContainsEdge(incomingEdges, edge)) then
+            Add(edge, incomingEdges)
+        endif
+
+    procedure AddOutgoingEdge(edge)
+        if (not CALL ContainsEdge(outgoingEdges, edge)) then
+            Add(edge, outgoingEdges)
+        endif
+
+    function GetName()
+        return nodeName
+
+    function GetIncomingEdges()
+        return incomingEdges
+
+    function GetOutgoingEdges()
+        return outgoingEdges
+
+    private function ContainsEdge(edgeCollection, edge)
+        for each item in edgeCollection
+            if (item equals edge) then
+                return true
+            endif
+        end for
+        return false
+
+
+
+
+
+
+Component Edge
+    declare edgeName
+    declare duration ← Integer
+    declare predecessor ← Node
+    declare successor ← Node
+
+    procedure SetPredecessor(node)
+        predecessor ← node
+
+    procedure SetSuccessor(node)
+        successor ← node
+
+    function GetEdgeName()
+        return edgeName
+
+    function GetDuration()
+        return duration
+
+    function GetPredecessor()
+        return predecessor
+
+    function GetSuccessor()
+        return successor
+

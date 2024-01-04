@@ -1,0 +1,32 @@
+﻿<Properties StartupConfiguration="{24BDE13F-F5FB-4450-9F3C-6A6D20FCCF43}|Default">
+  <MonoDevelop.Ide.ItemProperties.CriticalPathAnalysis PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="CriticalPathAnalysis/PathFinder.cs">
+    <Files>
+      <File FileName="CriticalPathAnalysis/Edge.cs" />
+      <File FileName="CriticalPathAnalysis/Node.cs" />
+      <File FileName="CriticalPathAnalysis/DirectedGraph.cs" />
+      <File FileName="CriticalPathAnalysis/PathFinder.cs" Line="88" Column="1" />
+      <File FileName="CriticalPathAnalysis/Program.cs" />
+      <File FileName="CriticalPathAnalysis/ProjectManager.cs" />
+      <File FileName="CriticalPathAnalysis/Scheduler.cs" />
+      <File FileName="CriticalPathAnalysis/Commands.cs" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="CriticalPathAnalysis" expanded="True">
+            <Node name="CriticalPathAnalysis" expanded="True">
+              <Node name="PathFinder.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+</Properties>

@@ -1,0 +1,33 @@
+﻿<Properties StartupConfiguration="{EF7A7C66-58D7-4BD0-BF48-F90B71F68467}|Default">
+  <MonoDevelop.Ide.ItemProperties.ExpressionEvaluation PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ExpressionEvaluation/InfixToPostfixConverter.cs">
+    <Files>
+      <File FileName="ExpressionEvaluation/IOperator.cs" />
+      <File FileName="ExpressionEvaluation/VariableManager.cs" />
+      <File FileName="ExpressionEvaluation/TokenType.cs" />
+      <File FileName="ExpressionEvaluation/Token.cs" />
+      <File FileName="ExpressionEvaluation/ExpressionParser.cs" Line="113" Column="55" />
+      <File FileName="ExpressionEvaluation/InfixToPostfixConverter.cs" Line="67" Column="42" />
+      <File FileName="ExpressionEvaluation/PostfixEvaluator.cs" Line="40" Column="1" />
+      <File FileName="ExpressionEvaluation/CommandLine.cs" Line="1" Column="1" />
+      <File FileName="ExpressionEvaluation/ComparisonOperation.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="ExpressionEvaluation" expanded="True">
+            <Node name="ExpressionEvaluation" expanded="True">
+              <Node name="InfixToPostfixConverter.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+</Properties>

@@ -1,0 +1,15 @@
+/Users/amallll/Documents/ADS-Assigment/ExpressionEvaluation/ExpressionEvaluation/ExpressionEvaluation/obj/Debug/net7.0/ExpressionEvaluation.csproj.AssemblyReference.cache
+/Users/amallll/Documents/ADS-Assigment/ExpressionEvaluation/ExpressionEvaluation/ExpressionEvaluation/obj/Debug/net7.0/ExpressionEvaluation.GeneratedMSBuildEditorConfig.editorconfig
+/Users/amallll/Documents/ADS-Assigment/ExpressionEvaluation/ExpressionEvaluation/ExpressionEvaluation/obj/Debug/net7.0/ExpressionEvaluation.AssemblyInfoInputs.cache
+/Users/amallll/Documents/ADS-Assigment/ExpressionEvaluation/ExpressionEvaluation/ExpressionEvaluation/obj/Debug/net7.0/ExpressionEvaluation.AssemblyInfo.cs
+/Users/amallll/Documents/ADS-Assigment/ExpressionEvaluation/ExpressionEvaluation/ExpressionEvaluation/obj/Debug/net7.0/ExpressionEvaluation.csproj.CoreCompileInputs.cache
+/Users/amallll/Documents/ADS-Assigment/ExpressionEvaluation/ExpressionEvaluation/ExpressionEvaluation/bin/Debug/net7.0/ExpressionEvaluation
+/Users/amallll/Documents/ADS-Assigment/ExpressionEvaluation/ExpressionEvaluation/ExpressionEvaluation/bin/Debug/net7.0/ExpressionEvaluation.deps.json
+/Users/amallll/Documents/ADS-Assigment/ExpressionEvaluation/ExpressionEvaluation/ExpressionEvaluation/bin/Debug/net7.0/ExpressionEvaluation.runtimeconfig.json
+/Users/amallll/Documents/ADS-Assigment/ExpressionEvaluation/ExpressionEvaluation/ExpressionEvaluation/bin/Debug/net7.0/ExpressionEvaluation.dll
+/Users/amallll/Documents/ADS-Assigment/ExpressionEvaluation/ExpressionEvaluation/ExpressionEvaluation/bin/Debug/net7.0/ExpressionEvaluation.pdb
+/Users/amallll/Documents/ADS-Assigment/ExpressionEvaluation/ExpressionEvaluation/ExpressionEvaluation/obj/Debug/net7.0/ExpressionEvaluation.dll
+/Users/amallll/Documents/ADS-Assigment/ExpressionEvaluation/ExpressionEvaluation/ExpressionEvaluation/obj/Debug/net7.0/refint/ExpressionEvaluation.dll
+/Users/amallll/Documents/ADS-Assigment/ExpressionEvaluation/ExpressionEvaluation/ExpressionEvaluation/obj/Debug/net7.0/ExpressionEvaluation.pdb
+/Users/amallll/Documents/ADS-Assigment/ExpressionEvaluation/ExpressionEvaluation/ExpressionEvaluation/obj/Debug/net7.0/ExpressionEvaluation.genruntimeconfig.cache
+/Users/amallll/Documents/ADS-Assigment/ExpressionEvaluation/ExpressionEvaluation/ExpressionEvaluation/obj/Debug/net7.0/ref/ExpressionEvaluation.dll
