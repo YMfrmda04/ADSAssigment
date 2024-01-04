@@ -1,0 +1,15 @@
+/Users/amallll/Documents/ADSAssigment/Project4Sorting/Project4Sorting/bin/Debug/net7.0/Project4Sorting
+/Users/amallll/Documents/ADSAssigment/Project4Sorting/Project4Sorting/bin/Debug/net7.0/Project4Sorting.deps.json
+/Users/amallll/Documents/ADSAssigment/Project4Sorting/Project4Sorting/bin/Debug/net7.0/Project4Sorting.runtimeconfig.json
+/Users/amallll/Documents/ADSAssigment/Project4Sorting/Project4Sorting/bin/Debug/net7.0/Project4Sorting.dll
+/Users/amallll/Documents/ADSAssigment/Project4Sorting/Project4Sorting/bin/Debug/net7.0/Project4Sorting.pdb
+/Users/amallll/Documents/ADSAssigment/Project4Sorting/Project4Sorting/obj/Debug/net7.0/Project4Sorting.csproj.AssemblyReference.cache
+/Users/amallll/Documents/ADSAssigment/Project4Sorting/Project4Sorting/obj/Debug/net7.0/Project4Sorting.GeneratedMSBuildEditorConfig.editorconfig
+/Users/amallll/Documents/ADSAssigment/Project4Sorting/Project4Sorting/obj/Debug/net7.0/Project4Sorting.AssemblyInfoInputs.cache
+/Users/amallll/Documents/ADSAssigment/Project4Sorting/Project4Sorting/obj/Debug/net7.0/Project4Sorting.AssemblyInfo.cs
+/Users/amallll/Documents/ADSAssigment/Project4Sorting/Project4Sorting/obj/Debug/net7.0/Project4Sorting.csproj.CoreCompileInputs.cache
+/Users/amallll/Documents/ADSAssigment/Project4Sorting/Project4Sorting/obj/Debug/net7.0/Project4Sorting.dll
+/Users/amallll/Documents/ADSAssigment/Project4Sorting/Project4Sorting/obj/Debug/net7.0/refint/Project4Sorting.dll
+/Users/amallll/Documents/ADSAssigment/Project4Sorting/Project4Sorting/obj/Debug/net7.0/Project4Sorting.pdb
+/Users/amallll/Documents/ADSAssigment/Project4Sorting/Project4Sorting/obj/Debug/net7.0/Project4Sorting.genruntimeconfig.cache
+/Users/amallll/Documents/ADSAssigment/Project4Sorting/Project4Sorting/obj/Debug/net7.0/ref/Project4Sorting.dll
